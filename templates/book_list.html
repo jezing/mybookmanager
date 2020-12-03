@@ -1,0 +1,70 @@
+{% extends "Master_list.html" %}
+
+{% block title_name %}
+    书籍列表
+{% endblock %}
+
+{% block sidebar %}
+    <li><a href="{% url "publisher" %}">出版社列表</a></li>
+    <li class="active"><a href="{% url "book" %}">图书列表</a></li>
+    <li><a href="{% url "author" %}">作者列表</a></li>
+
+{% endblock %}
+
+{% block main %}
+    <h2 class="sub-header">Book List Section</h2>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>
+                    序号
+                </th>
+                <th>
+                    id
+                </th>
+                <th>
+                    书籍名称
+                </th>
+                <th>
+                    出版社
+                </th>
+                <th>
+                    售价（￥）
+                </th>
+                <th>
+                    销售量
+                </th>
+                <th>
+                    库存量
+                </th>
+                <th>
+                    操作
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for book in all_books %}
+                <tr>
+
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ book.id }}</td>
+                    <td>{{ book.name }}</td>
+                    <td>{{ book.publisher.name }}</td>
+                    <td>{{ book.price }}</td>
+                    <td>{{ book.sale }}</td>
+                    <td>{{ book.stock }}</td>
+                    <td>
+                        <a class="btn btn-danger btn-sm" href="{% url "del" "book" book.id %}">删除</a>
+                        <a class="btn btn-primary btn-sm" href="{% url "bk_edit" book.id %}">编辑</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <a class="btn btn-primary" href="{% url "bk_add" %}"> 新增</a>
+        </table>
+    </div>
+
+    {% load mytags %}
+    {% pages 5 %}
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "Master_list.html" %}
+
+{% block title_name %}
+    出版社
+{% endblock %}
+
+{% block sidebar %}
+    <li class="active"><a href="{% url "publisher" %}">出版社列表</a></li>
+    <li><a href="{% url "book" %}">图书列表</a></li>
+    <li><a href="{% url "author" %}">作者列表</a></li>
+
+{% endblock %}
+
+{% block main %}
+    <h2 class="sub-header">Publishing House Section</h2>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>
+                    序号
+                </th>
+                <th>
+                    id
+                </th>
+                <th>
+                    出版社名称
+                </th>
+                <th>
+                    操作
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for i in all_pub %}
+                <tr>
+
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ i.id }}</td>
+                    <td>{{ i.name }}</td>
+                    <td>
+                        <a class="btn btn-danger btn-sm" href="{% url "del" "publisher" i.id %}/">删除</a>
+                        <a class="btn btn-primary btn-sm" href="{% url "pub_edit" i.id %}">编辑</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <a class="btn btn-primary" href="{% url "pub_add" %}"> 新增</a>
+        </table>
+    </div>
+
+{#    {% load mytags %}#}
+{#    {% pagination 3 %}#}
+    {% load mytags %}
+    {% pages 3 %}
+{% endblock %}

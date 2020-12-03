@@ -1,0 +1,63 @@
+{% extends "Master_list.html" %}
+
+{% block title_name %}
+    作者列表
+{% endblock %}
+
+{% block sidebar %}
+    <li><a href="{% url "publisher" %}">出版社列表</a></li>
+    <li><a href="{% url "book" %}">图书列表</a></li>
+    <li class="active"><a href="{% url "author" %}">作者列表</a></li>
+
+{% endblock %}
+
+{% block main %}
+    <h2 class="sub-header">Authors Section</h2>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>
+                    序号
+                </th>
+                <th>
+                    id
+                </th>
+                <th>
+                    姓名
+                </th>
+                <th>
+                    代表作
+                </th>
+                <th>
+                    操作
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for author in all_authors %}
+                <tr>
+
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ author.id }}</td>
+                    <td>{{ author.name }}</td>
+                    <td>
+                        {% for book in author.books.all %}
+                            《{{ book.name }}》/
+                        {% endfor %}
+
+                    </td>
+                    <td>
+                        <a class="btn btn-danger btn-sm" href="{% url "del" "author" author.id %}">删除</a>
+                        <a class="btn btn-primary btn-sm" href="{% url "auh_edit" author.id %}">编辑</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <a class="btn btn-primary" href="{% url "auh_add" %}"> 新增</a>
+        </table>
+    </div>
+
+    {% load mytags %}
+    {% pages 2 %}
+{% endblock %}

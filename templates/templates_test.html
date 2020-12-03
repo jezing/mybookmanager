@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+
+{{ num }}
+<br>
+{{ string }}
+<br>
+{{ name_list }}||
+{{ name_list.0 }}
+<br>
+{{ name_set }}
+<br>
+{{ dic.key1 }}  {# 直接.key就可以取到value值 #}
+{{ dic.keys }}
+
+<br>
+{{ name_tup }}
+<br>
+{{ Person.talk }}
+
+
+{# 只能拿到那些不带参数的函数，因为不能使用括号 #}
+
+{#当模板系统遇到一个（.）时，会按照如下的顺序去查询：#}
+{#1.在字典中查询#}
+{#2.属性或者方法#}
+{#3.数字索引#}
+
+<br>
+<br>
+{{ name|default:"123" }} {# ：左右没有空格 #}
+<br>
+{{ empty|default:"空，暂无数据" }} {# 当传进来的数据是空列表，空字典时可以进行默认值设置 #}
+
+<br>
+{% load mytags %}
+{{ "Alex"|add_arg:"nacy" }}
+
+<ul>
+    {% for name in name_list %}
+    <li>
+        {{ forloop.counter }}-{{ name }}
+    </li>
+    {% endfor %}
+</ul>
+
+<ul>
+    {% for em in empty %}
+        {{ em }}
+        {% empty %}
+        its empty
+    {% endfor %}
+
+</ul>
+
+<ul>
+    {% if num < 0%}
+        {{ num }}小于0
+        {% elif num == 0%}
+        {{ num }}等于0
+        {% else %}
+        {{ num }}大于0
+    {% endif %}
+</ul>
+
+{% with Person.name as p_name  %}
+    {{ p_name }}
+{% endwith %}
+
+</body>
+</html>
